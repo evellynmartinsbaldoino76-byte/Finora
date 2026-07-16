@@ -6,6 +6,7 @@ const list = document.querySelector('#transaction-list');
 const emptyState = document.querySelector('#empty-state');
 const dateInput = document.querySelector('#date');
 const saveButton = document.querySelector('#save-transaction');
+const transactionError = document.querySelector('#transaction-error');
 const currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 let activeFilter = 'all';
 
@@ -32,6 +33,10 @@ function closeModal() {
   if (modal?.open) modal.close();
 }
 
+function showTransactionError(message = '') {
+  if (transactionError) transactionError.textContent = message;
+}
+
 function persist() {
   localStorage.setItem('finora-transactions', JSON.stringify(transactions));
 }
@@ -42,6 +47,17 @@ function formatDate(date) {
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
+}
+
+function parseAmount(value) {
+  const rawValue = String(value)
+    .trim()
+    .replace(/R\$\s?/gi, '')
+    .replace(/\s/g, '');
+  const normalized = rawValue.includes(',')
+    ? rawValue.replace(/\./g, '').replace(',', '.')
+    : rawValue;
+  return Number(normalized);
 }
 
 function render() {
@@ -72,23 +88,31 @@ function saveTransaction() {
 
   const data = new FormData(form);
   const description = data.get('description').trim();
-  const amount = Number(data.get('amount'));
+  const amount = parseAmount(data.get('amount'));
   const date = data.get('date');
 
-  if (!description || !Number.isFinite(amount) || amount <= 0 || !date) return;
+  if (!Number.isFinite(amount) || amount <= 0) {
+    showTransactionError('Informe um valor maior que zero. Ex.: 25,90');
+    return;
+  }
 
-  transactions.unshift({
-    id: crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
-    description,
-    amount,
-    date,
-    type: data.get('type'),
-  });
-  persist();
-  render();
-  form.reset();
-  setToday();
-  closeModal();
+  try {
+    transactions.unshift({
+      id: globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`,
+      description,
+      amount,
+      date,
+      type: data.get('type'),
+    });
+    persist();
+    render();
+    form.reset();
+    setToday();
+    showTransactionError();
+    closeModal();
+  } catch {
+    showTransactionError('Não foi possível salvar agora. Tente novamente.');
+  }
 }
 
 saveButton?.addEventListener('click', saveTransaction);
