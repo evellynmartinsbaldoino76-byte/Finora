@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Aplicação de controle financeiro pessoal." />
+    <title>Finora | Controle financeiro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#">finora<span>.</span></a>
+      <p>Finanças simples e inteligentes.</p>
+    </header>
+
+    <main class="container">
+      <section class="intro">
+        <div><p class="eyebrow">VISÃO GERAL</p><h1>Olá! Veja como está sua <span>vida financeira.</span></h1></div>
+        <button id="new-transaction" class="button">+ Nova transação</button>
+      </section>
+
+      <section class="summary" aria-label="Resumo financeiro">
+        <article class="balance-card"><p>Saldo atual</p><strong id="balance">R$ 0,00</strong><small id="balance-note">Comece registrando uma transação</small></article>
+        <article><p><i class="income-dot"></i>Receitas</p><strong id="income">R$ 0,00</strong></article>
+        <article><p><i class="expense-dot"></i>Despesas</p><strong id="expense">R$ 0,00</strong></article>
+      </section>
+
+      <section class="content-grid">
+        <section class="transactions">
+          <div class="section-heading"><div><p class="eyebrow">MOVIMENTAÇÕES</p><h2>Suas transações</h2></div><div class="filters" role="group" aria-label="Filtrar transações"><button class="filter active" data-filter="all">Todas</button><button class="filter" data-filter="income">Receitas</button><button class="filter" data-filter="expense">Despesas</button></div></div>
+          <div id="transaction-list" class="transaction-list"></div>
+          <div id="empty-state" class="empty-state"><span>◌</span><p>Nenhuma transação por aqui.</p><button class="text-button" id="empty-add">Adicionar primeira transação</button></div>
+        </section>
+        <aside class="tip"><p class="eyebrow">DICA DO DIA</p><p>Pequenas escolhas, quando repetidas, fazem uma grande diferença no seu futuro.</p><span>✦ ORGANIZE · PLANEJE · REALIZE</span></aside>
+      </section>
+    </main>
+
+    <dialog id="transaction-modal">
+      <form id="transaction-form" method="dialog">
+        <div class="modal-heading"><div><p class="eyebrow">NOVA MOVIMENTAÇÃO</p><h2>Registrar transação</h2></div><button class="close" type="button" aria-label="Fechar">×</button></div>
+        <label>Descrição<input id="description" type="text" placeholder="Ex.: Salário, mercado..." maxlength="50" required /></label>
+        <div class="form-row"><label>Valor<input id="amount" type="number" min="0.01" step="0.01" placeholder="0,00" required /></label><label>Data<input id="date" type="date" required /></label></div>
+        <fieldset><legend>Tipo</legend><label class="type-option"><input type="radio" name="type" value="income" checked /><span>↑ Receita</span></label><label class="type-option"><input type="radio" name="type" value="expense" /><span>↓ Despesa</span></label></fieldset>
+        <button class="button submit" type="submit">Salvar transação →</button>
+      </form>
+    </dialog>
+    <script src="auth-guard.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
