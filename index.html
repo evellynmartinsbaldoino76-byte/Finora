@@ -30,7 +30,7 @@
 
       <section class="content-grid">
         <section class="transactions">
-          <div class="section-heading"><div><p class="eyebrow">MOVIMENTAÇÕES</p><h2>Suas transações</h2></div><div class="filters" role="group" aria-label="Filtrar transações"><button class="filter active" data-filter="all">Todas</button><button class="filter" data-filter="income">Receitas</button><button class="filter" data-filter="expense">Despesas</button></div></div>
+          <div class="section-heading"><div><p class="eyebrow">MOVIMENTAÇÕES</p><h2>Suas transações</h2></div><div class="filters" role="group" aria-label="Filtrar transações"><button class="filter active" type="button" data-filter="all">Todas</button><button class="filter" type="button" data-filter="income">Receitas</button><button class="filter" type="button" data-filter="expense">Despesas</button></div></div>
           <div id="transaction-list" class="transaction-list"></div>
           <div id="empty-state" class="empty-state"><span>◌</span><p>Nenhuma transação por aqui.</p><button class="text-button" id="empty-add">Adicionar primeira transação</button></div>
         </section>
@@ -39,7 +39,7 @@
     </main>
 
     <dialog id="transaction-modal">
-      <form id="transaction-form" method="dialog">
+      <form id="transaction-form">
         <div class="modal-heading"><div><p class="eyebrow">NOVA MOVIMENTAÇÃO</p><h2>Registrar transação</h2></div><button class="close" type="button" aria-label="Fechar">×</button></div>
         <label>Descrição<input id="description" type="text" placeholder="Ex.: Salário, mercado..." maxlength="50" required /></label>
         <div class="form-row"><label>Valor<input id="amount" type="number" min="0.01" step="0.01" placeholder="0,00" required /></label><label>Data<input id="date" type="date" required /></label></div>
