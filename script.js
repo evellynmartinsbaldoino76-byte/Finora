@@ -5,6 +5,7 @@ const closeButton = document.querySelector('.close');
 const list = document.querySelector('#transaction-list');
 const emptyState = document.querySelector('#empty-state');
 const dateInput = document.querySelector('#date');
+const saveButton = document.querySelector('#save-transaction');
 const currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 let activeFilter = 'all';
 
@@ -66,8 +67,9 @@ modal?.addEventListener('click', (event) => {
   if (event.target === modal) closeModal();
 });
 
-form?.addEventListener('submit', (event) => {
-  event.preventDefault();
+function saveTransaction() {
+  if (!form?.reportValidity()) return;
+
   const data = new FormData(form);
   const description = data.get('description').trim();
   const amount = Number(data.get('amount'));
@@ -87,6 +89,12 @@ form?.addEventListener('submit', (event) => {
   form.reset();
   setToday();
   closeModal();
+}
+
+saveButton?.addEventListener('click', saveTransaction);
+form?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  saveTransaction();
 });
 
 list?.addEventListener('click', ({ target }) => {

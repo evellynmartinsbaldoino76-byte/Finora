@@ -44,7 +44,7 @@
         <label>Descrição<input id="description" type="text" placeholder="Ex.: Salário, mercado..." maxlength="50" required /></label>
         <div class="form-row"><label>Valor<input id="amount" type="number" min="0.01" step="0.01" placeholder="0,00" required /></label><label>Data<input id="date" type="date" required /></label></div>
         <fieldset><legend>Tipo</legend><label class="type-option"><input type="radio" name="type" value="income" checked /><span>↑ Receita</span></label><label class="type-option"><input type="radio" name="type" value="expense" /><span>↓ Despesa</span></label></fieldset>
-        <button class="button submit" type="submit">Salvar transação →</button>
+        <button id="save-transaction" class="button submit" type="button">Salvar transação →</button>
       </form>
     </dialog>
     <script src="auth-guard.js"></script>
